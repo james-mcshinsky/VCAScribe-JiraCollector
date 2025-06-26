@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VCA Scribe Feedback Portal</title>
+
+  <!-- Material Icons -->
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />
+  <!-- Roboto & Montserrat -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Montserrat:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Pre-defined templates -->
+  <script>
+    const bugTemplate = [
+      "*Steps to Reproduce:*",
+      "1. ",
+      "2. ",
+      "",
+      "*Expected Behavior:*",
+      "",
+      "*Actual Behavior:*",
+      "",
+      "*Additional Context:*",
+      ""
+    ].join("\n");
+
+    const featureTemplate = [
+      "*Feature Request:*",
+      "",
+      "*Use Case:*",
+      "",
+      "*Proposed Solution:*",
+      "",
+      "*Benefits / Impact:*",
+      "",
+      "*Additional Context:*",
+      ""
+    ].join("\n");
+  </script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #f5f5f5;
+      font-family: 'Roboto', sans-serif;
+      color: #172B4D;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+    *, *::before, *::after { box-sizing: border-box }
+    header {
+      background: #0052CC;
+      color: white;
+      padding: 2rem 1rem;
+      font-family: 'Montserrat', sans-serif;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    header p {
+      margin-top: 0.5rem;
+      font-weight: 300;
+      font-size: 1.1rem;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .card {
+      background: white;
+      max-width: 600px;
+      width: 100%;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      font-family: 'Montserrat', sans-serif;
+    }
+    .card h2 { margin-top: 0; font-size: 1.8rem; font-weight: 500 }
+    .card p { color: #42526E; margin: 1rem 0 1.5rem; font-size: 1rem }
+    .buttons { display: flex; gap: 1rem; justify-content: center }
+    .buttons button {
+      display: inline-flex;
+      align-items: center;
+      background: #1976D2;
+      color: white;
+      border: none;
+      padding: .75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      transition: background .2s;
+    }
+    .buttons button:hover { background: #1059A7 }
+    .buttons i.material-icons { margin-right: .5rem }
+    button:focus {
+      outline: 3px solid #0052CC;
+      outline-offset: 2px;
+    }
+    footer {
+      background: #f0f0f0;
+      padding: 1rem;
+      font-size: .9rem;
+      color: #42526E;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>😊 VCA Scribe Feedback</h1>
+    <p>Report bugs or request features—your feedback powers our improvements!</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Submit Your Feedback</h2>
+      <p>Choose one of the options below to open the form:</p>
+      <div class="buttons">
+        <button id="bugTrigger" type="button" aria-label="Report a Bug">
+          <i class="material-icons" aria-hidden="true">bug_report</i>
+          Report a Bug
+        </button>
+        <button id="featureTrigger" type="button" aria-label="Request a Feature">
+          <i class="material-icons" aria-hidden="true">lightbulb</i>
+          Request a Feature
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 VCA Scribe • All rights reserved
+  </footer>
+
+  <!-- ─────────── 1. BUG COLLECTOR CONFIG & SCRIPT ─────────── -->
+  <script>
+    // ensure the global object exists
+    window.ATL_JQ_PAGE_PROPS = window.ATL_JQ_PAGE_PROPS || {};
+
+    // use your bug collectorId as the key here
+    window.ATL_JQ_PAGE_PROPS['cb43940f'] = {
+      triggerFunction: function(showCollectorDialog) {
+        jQuery("#bugTrigger").on("click", function(e) {
+          e.preventDefault();
+          // inject the bug template
+          showCollectorDialog({
+            fieldValues: { description: bugTemplate }
+          });
+        });
+      },
+      fieldValues: {
+        summary: "",
+        description: bugTemplate,
+        labels: ["feedback-portal", "bug"]
+      },
+      environment: function() {
+        return [
+          "• URL: " + location.href,
+          "• User Agent: " + navigator.userAgent,
+          "• Screen: " + screen.width + "×" + screen.height
+        ].join("\n");
+      },
+      collectBrowserInfo: true
+    };
+  </script>
+  <script defer
+    src="https://vcaproduct.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-yl7qth/b/0/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=cb43940f">
+  </script>
+
+  <!-- ──────── 2. FEATURE COLLECTOR CONFIG & SCRIPT ─────────── -->
+  <script>
+    window.ATL_JQ_PAGE_PROPS = window.ATL_JQ_PAGE_PROPS || {};
+
+    // your feature collectorId
+    window.ATL_JQ_PAGE_PROPS['76dca4cc'] = {
+      triggerFunction: function(showCollectorDialog) {
+        jQuery("#featureTrigger").on("click", function(e) {
+          e.preventDefault();
+          showCollectorDialog({
+            fieldValues: { description: featureTemplate }
+          });
+        });
+      },
+      fieldValues: {
+        summary: "",
+        description: featureTemplate,
+        labels: ["feedback-portal", "feature"]
+      },
+      environment: function() {
+        return [
+          "• URL: " + location.href,
+          "• User Agent: " + navigator.userAgent,
+          "• Screen: " + screen.width + "×" + screen.height
+        ].join("\n");
+      },
+      collectBrowserInfo: true
+    };
+  </script>
+  <script defer
+    src="https://vcaproduct.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-yl7qth/b/0/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=76dca4cc">
+  </script>
+</body>
+</html>
